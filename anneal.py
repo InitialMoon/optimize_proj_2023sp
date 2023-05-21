@@ -17,14 +17,12 @@ def load_data(path):
     return instances
 
 
-def neh_initial(length, data):
-    """
-    generate a permutation use NEH algorithm
-    """
-    return
-
-
 def random_initial(length):
+    """
+    随机生成一个排列作为初值
+    :param length: 排列的长度
+    :return: 一个排列
+    """
     origin_list = []
     for i in range(length):
         origin_list.append(i)
@@ -132,6 +130,11 @@ def cal_timeline_no_wait(time_table, per):
 
 
 def swap_twice(x_cur):
+    """
+    二交换
+    :param x_cur: 当前解排列
+    :return: 二交换生成的一个邻域解
+    """
     fir = random.randint(0, len(x_cur))
     sec = random.randint(0, len(x_cur))
     pfir = min(fir, sec)
@@ -146,6 +149,11 @@ def swap_twice(x_cur):
 
 
 def swap_third(x_cur):
+    """
+    三交换
+    :param x_cur: 当前解排列
+    :return: 三交换生成的一个邻域解
+    """
     fir = random.randint(0, len(x_cur))
     sec = random.randint(0, len(x_cur))
     thi = random.randint(0, len(x_cur))
@@ -167,6 +175,11 @@ def swap_third(x_cur):
 
 
 def swap_point(x_cur):
+    """
+    点交换
+    :param x_cur: 当前解排列
+    :return: 点交换后的结果
+    """
     fir = random.randint(0, len(x_cur))
     sec = random.randint(0, len(x_cur))
     temp = x_cur[fir]
@@ -176,6 +189,11 @@ def swap_point(x_cur):
 
 
 def get_neighbor(x_cur):
+    """
+    以等概率选择三种随机获取邻域解
+    :param x_cur: 当前解排列
+    :return: 随机生成的一个邻域解
+    """
     dice = random.random()
     if dice > 0.67:
         return swap_point(x_cur)
@@ -259,6 +277,12 @@ def sa(time_table, cal_func):
 
 
 def mian_logic(in_path, out_path, cal_func):
+    """
+    等待和无等待实验的相同逻辑部分
+    :param in_path: 数据来源路径
+    :param out_path: 输出路径中间名
+    :param cal_func: 是调用无等待计算方式还是调用等待计算方式
+    """
     all_tests = load_data(in_path)
     repeat_num = 10  # 每组数据重复实验的次数
     instance = 0
@@ -294,11 +318,17 @@ def mian_logic(in_path, out_path, cal_func):
 
 
 def run_no_wait():
+    """
+    进行无等待算法的运行实验
+    """
     print("no wait")
     mian_logic("../no_wait.txt", "no_wait", cal_timeline_no_wait)
 
 
 def run_wait():
+    """
+    进行等待算法的运行实验
+    """
     print("wait")
     mian_logic("../wait.txt", "wait", cal_timeline_wait)
 
